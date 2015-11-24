@@ -86,7 +86,7 @@ if (isset($_COOKIE['user'])) {
 						error(mysql_error());
 					$bound_num_rows = mysql_num_rows($boundesult);
 					$fsn = mysql_query(
-							"SELECT FULLYSPECIFIEDNAME FROM `$snomeddbname`.concepts WHERE CONCEPTID = '$conceptid' ");
+							"SELECT Term FROM `$snomeddbname`.sct2_description WHERE CONCEPTID = '$conceptid' ");
 					if (!$fsn)
 						error(mysql_error());
 					$row = mysql_fetch_row($fsn);
@@ -417,7 +417,7 @@ if (isset($_COOKIE['user'])) {
 				$id = $row['id'];
 				$conceptid = $row['conceptid'];
 				$fsn = mysql_query(
-						"SELECT FULLYSPECIFIEDNAME FROM `$snomeddbname`.concepts WHERE CONCEPTID = '$conceptid' ");
+						"SELECT Term FROM `$snomeddbname`.sct2_description WHERE CONCEPTID = '$conceptid' ");
 				if (!$content)
 					error(mysql_error());
 				$snorow = mysql_fetch_row($fsn);
@@ -529,7 +529,7 @@ if (isset($_COOKIE['user'])) {
 			while ($conceptrow = mysql_fetch_array($concepts)) {
 				$conceptid = $conceptrow['conceptid'];
 				//$fsn = mysql_query(
-				//	"SELECT FULLYSPECIFIEDNAME FROM `$snomeddbname`.concepts WHERE CONCEPTID = '$conceptid' ");
+				//	"SELECT Term FROM `$snomeddbname`.sct2_description WHERE CONCEPTID = '$conceptid' ");
 				//	if (!$fsn)
 				//	error(mysql_error());
 				//	$row = mysql_fetch_row($fsn);
