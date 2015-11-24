@@ -294,7 +294,7 @@ if (isset($_COOKIE['user'])) {
 											<?php
 			if (($lymphCode == "284427004") && $insertedcode) {
 				$conceptid = "284427004";
-				$fsn = mysql_query("SELECT FULLYSPECIFIEDNAME FROM concepts WHERE CONCEPTID = '$conceptid' ");
+				$fsn = mysql_query("SELECT Term FROM `$snomeddbname`.sct2_description WHERE CONCEPTID = '$conceptid' ");
 				if (!$fsn)
 					error(mysql_error());
 				$row = mysql_fetch_row($fsn);

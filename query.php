@@ -941,7 +941,7 @@ if (isset($_COOKIE['user'])) {
 					$color = "green";
 				if (((bool) $numeratoronly) && (!((bool) $active)))
 					$color = "DarkSeaGreen";
-				$fsn = mysql_query("SELECT FULLYSPECIFIEDNAME FROM concepts WHERE CONCEPTID = '$conceptid' ");
+				$fsn = mysql_query("SELECT Term FROM `$snomeddbname`.sct2_description WHERE CONCEPTID = '$conceptid' ");
 				if (!$fsn)
 					error(mysql_error());
 				$snorow = mysql_fetch_row($fsn);
@@ -984,7 +984,7 @@ if (isset($_COOKIE['user'])) {
 					$color = "green";
 				if (((bool) $numeratoronly) && (!((bool) $active)))
 					$color = "DarkSeaGreen";
-				$fsn = mysql_query("SELECT FULLYSPECIFIEDNAME FROM concepts WHERE CONCEPTID = '$conceptid' ");
+				$fsn = mysql_query("SELECT Term FROM `$snomeddbname`.sct2_description WHERE CONCEPTID = '$conceptid' ");
 				if (!$fsn)
 					error(mysql_error());
 				$snorow = mysql_fetch_row($fsn);

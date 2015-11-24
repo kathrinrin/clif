@@ -185,7 +185,7 @@ if (isset($_COOKIE['user'])) {
 			while ($row = mysql_fetch_array($content)) {
 				$id = $row['id'];
 				$conceptid = $row['conceptid'];
-				$fsn = mysql_query("SELECT FULLYSPECIFIEDNAME FROM `$snomeddbname`.sct2_concept WHERE CONCEPTID = '$conceptid' ");
+				$fsn = mysql_query("SELECT Term FROM `$snomeddbname`.sct2_description WHERE CONCEPTID = '$conceptid' ");
 				if (!$fsn)
 				 	error(mysql_error());
 				$snorow = mysql_fetch_row($fsn);
