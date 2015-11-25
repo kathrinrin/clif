@@ -319,8 +319,7 @@ if (isset($_COOKIE['user'])) {
 		</form>
 		<a name="queryvariables"></a>
 		<h2>1. Define query variables</h2>
-		If you need several elements of the type / database table Procedure_undertaken or Diagnosis (check the <a
-			target="_blank" href="schema/tables/Patient.html">database schema</a>), please define query variables
+		If you need several elements of the same database table, please define query variables
 			(i.e. alias names) in order to distinguish them.
 		<div class="workwell">
 			<form action="<?php echo $_SERVER['PHP_SELF'] . '#queryvariables' ?>"
