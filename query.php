@@ -143,7 +143,7 @@ if (isset($_COOKIE['user'])) {
 					}
 				}
 			}
-			$select = 'SELECT DISTINCT `patient`.`patientnummer` ';
+			$select = 'SELECT DISTINCT `patient`.`patientnumber` ';
 			$fromnumerator = "";
 			$fromdenominator = "FROM `$patientsdbname`.`patient` \r\n";
 			$queryvariableexclusionstringnumerator = "";

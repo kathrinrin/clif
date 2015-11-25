@@ -369,8 +369,8 @@ if (isset($_COOKIE['user'])) {
 								<?php
 			foreach ($patienttables as &$patienttable) {
 				$option = "$patienttable";
-				if ((strcmp($option, "journaal") == 0) || (strcmp($option, "bepaling") == 0)
-						|| (strcmp($option, "medicatie") == 0)) {
+				if ((strcmp($option, "journal") == 0) || (strcmp($option, "measurement") == 0)
+						|| (strcmp($option, "medication") == 0)) {
 					echo "<option value='$option'";
 					if (strcmp($table, $option) == 0) {
 						echo "selected='selected'";
