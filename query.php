@@ -143,7 +143,7 @@ if (isset($_COOKIE['user'])) {
 					}
 				}
 			}
-			$select = 'SELECT DISTINCT `patient`.`patientnumber` ';
+			$select = 'SELECT DISTINCT `patient`.`patientid` ';
 			$fromnumerator = "";
 			$fromdenominator = "FROM `$patientsdbname`.`patient` \r\n";
 			$queryvariableexclusionstringnumerator = "";
@@ -368,7 +368,7 @@ if (isset($_COOKIE['user'])) {
 				if ((!in_multiarray($querytablesnumerator[$q], $aliastablesnumerator))
 						&& ($querytablesnumerator[$q] != "patient")) {
 
-					$newconstraintjoin = " JOIN `$querytablesnumerator[$q]` ON `patient`.`patientnummer` = `$querytablesnumerator[$q]`.`patientnummer` \r\n ";
+					$newconstraintjoin = " JOIN `$querytablesnumerator[$q]` ON `patient`.`patientid` = `$querytablesnumerator[$q]`.`patientid` \r\n ";
 					if (count($extrajoins[$querytablesnumerator[$q]]) > 0) {
 						$substrings = explode("`", $extrajoins[$querytablesnumerator[$q]]);
 						$subtable1 = $substrings[1];
@@ -413,7 +413,7 @@ if (isset($_COOKIE['user'])) {
 
 									if (!$isexclusion) {
 
-										$newconstraintjoin = " JOIN `$newk` AS `$val` ON `patient`.`patientnummer` = `$val`.`patientnummer` \r\n ";
+										$newconstraintjoin = " JOIN `$newk` AS `$val` ON `patient`.`patientid` = `$val`.`patientid` \r\n ";
 										if (count($extrajoins[$val]) > 0) {
 											$substrings = explode("`", $extrajoins[$val]);
 											$subtable1 = $substrings[1];
@@ -443,7 +443,7 @@ if (isset($_COOKIE['user'])) {
 			for ($q = 0; $q < count($querytablesnumerator); $q++) {
 				if (count($numeratorconstraintsbyquerytable[$querytablesnumerator[$q]]) > 0) {
 					$constraintsgroup = $numeratorconstraintsbyquerytable[$querytablesnumerator[$q]];
-					$constraintsstring = groupconstraints($constraintsgroup, 'ICPC', 'Nummer', 'ATC_Code');
+					$constraintsstring = groupconstraints($constraintsgroup, 'SNOMED_CT_Code', 'Nummer', 'ATC_Code');
 					$wherenumerator = addstring($wherenumerator, $constraintsstring);
 				}
 
@@ -473,7 +473,7 @@ if (isset($_COOKIE['user'])) {
 
 						$subselectnumerator = $subselectnumerator . "\r\nAND `" . $querytablesnumerator[$q]
 								. "`.`Datum` = \r\n" . "( \r\n" . " SELECT MAX(`Datum`) FROM `bepaling_subset` \r\n"
-								. " WHERE `patient`.`patientnummer` = `bepaling_subset`.`patientnummer` \r\n" . " AND "
+								. " WHERE `patient`.`patientid` = `bepaling_subset`.`patientid` \r\n" . " AND "
 								. $conceptgroup[$c] . "\r\n";
 
 						if (count($wherenumeratorconstraintsbyquerytable[$querytablesnumerator[$q]]) > 0) {
@@ -512,7 +512,7 @@ if (isset($_COOKIE['user'])) {
 				if (count($exclusions[$querytablesnumerator[$q]]) > 0) {
 					$exclusiongroup = $exclusions[$querytablesnumerator[$q]];
 					$connector = "AND";
-					if (more_than_one($exclusiongroup, 'ICPC') || more_than_one($exclusiongroup, 'Nummer')
+					if (more_than_one($exclusiongroup, 'SNOMED_CT_Code') || more_than_one($exclusiongroup, 'Nummer')
 							|| more_than_one($exclusiongroup, 'Uitschrijfdatum')) {
 						$connector = "OR";
 					}
@@ -542,17 +542,17 @@ if (isset($_COOKIE['user'])) {
 					$exclusiongroup = $variableexclusionsnumerator[$querytablesnumerator[$q]];
 					$nummerexclusions = array();
 
-					$table = 'bepaling_subset';
+					$table = 'medication';
 					if (strstr(implode($exclusiongroup), '%')) {
-						$table = 'medicatie';
+						$table = 'diagnosis';
 					}
 
 					$queryvariableexclusionstringnumerator = $queryvariableexclusionstringnumerator
-							. "\r\n AND NOT EXISTS \r\n" . "(SELECT `patientnummer` \r\n " . "FROM `$table` AS `"
+							. "\r\n AND NOT EXISTS \r\n" . "(SELECT `patientid` \r\n " . "FROM `$table` AS `"
 							. $querytablesnumerator[$q] . "` \r\n";
 
 					$exclusionwhere = "WHERE `" . $querytablesnumerator[$q]
-							. "`.`patientnummer` = `patient`.`patientnummer`";
+							. "`.`patientid` = `patient`.`patientid`";
 
 					for ($e = 0; $e < count($exclusiongroup); $e++) {
 
@@ -588,7 +588,7 @@ if (isset($_COOKIE['user'])) {
 			for ($q = 0; $q < count($querytablesdenominator); $q++) {
 				if ((!in_multiarray($querytablesdenominator[$q], $aliastablesdenominator))
 						&& (strcmp($querytablesdenominator[$q], "patient") != 0)) {
-					$newconstraintjoin = " JOIN `$querytablesdenominator[$q]` ON `patient`.`patientnummer` = `$querytablesdenominator[$q]`.`patientnummer` \r\n ";
+					$newconstraintjoin = " JOIN `$querytablesdenominator[$q]` ON `patient`.`patientid` = `$querytablesdenominator[$q]`.`patientid` \r\n ";
 					if (count($extrajoins[$querytablesdenominator[$q]]) > 0) {
 						$substrings = explode("`", $extrajoins[$querytablesdenominator[$q]]);
 						$subtable1 = $substrings[1];
@@ -620,7 +620,7 @@ if (isset($_COOKIE['user'])) {
 					foreach ($v as $key => $val) {
 
 						if (($k != '') || ($key != '')) {
-							$newconstraintjoin = " JOIN `$k` AS `$val` ON `patient`.`patientnummer` = `$val`.`patientnummer` \r\n ";
+							$newconstraintjoin = " JOIN `$k` AS `$val` ON `patient`.`patientid` = `$val`.`patientid` \r\n ";
 							if (count($extrajoins[$val]) > 0) {
 								$substrings = explode("`", $extrajoins[$val]);
 								$subtable1 = $substrings[1];
@@ -657,7 +657,7 @@ if (isset($_COOKIE['user'])) {
 				// concept groups
 				if (count($denominatorconstraintsbyquerytable[$querytablesdenominator[$q]]) > 0) {
 					$constraintsgroup = $denominatorconstraintsbyquerytable[$querytablesdenominator[$q]];
-					$constraintsstring = groupconstraints($constraintsgroup, 'ICPC', 'Nummer', 'ATC_Code');
+					$constraintsstring = groupconstraints($constraintsgroup, 'SNOMED_CT_Code', 'Nummer', 'ATC_Code');
 					$wheredenominator = addstring($wheredenominator, $constraintsstring);
 				}
 
@@ -692,7 +692,7 @@ if (isset($_COOKIE['user'])) {
 							$subselectdenominator = $subselectdenominator . "\r\nAND `" . $querytablesdenominator[$q]
 									. "`.`Datum` = \r\n" . "( \r\n"
 									. " SELECT MAX(`Datum`) FROM `bepaling_subset` \r\n"
-									. " WHERE `patient`.`patientnummer` = `bepaling_subset`.`patientnummer` \r\n"
+									. " WHERE `patient`.`patientid` = `bepaling_subset`.`patientid` \r\n"
 									. " AND " . $conceptgroup[$e] . "\r\n";
 
 							if (count($wheredenominatorconstraintsbyquerytable[$querytablesdenominator[$q]]) > 0) {
@@ -745,7 +745,7 @@ if (isset($_COOKIE['user'])) {
 				// date groups
 				if (count($datesdenominator[$querytablesdenominator[$q]]) > 0) {
 					$constraintsgroup = $datesdenominator[$querytablesdenominator[$q]];
-					$constraintsstring = groupconstraints($constraintsgroup, 'ICPC', 'Uitschrijfdatum');
+					$constraintsstring = groupconstraints($constraintsgroup, 'SNOMED_CT_Code', 'Uitschrijfdatum');
 					$wheredenominator = addstring($wheredenominator, $constraintsstring);
 				}
 
@@ -761,7 +761,7 @@ if (isset($_COOKIE['user'])) {
 				if (count($exclusions[$querytablesdenominator[$q]]) > 0) {
 					$exclusiongroup = $exclusions[$querytablesdenominator[$q]];
 					$connector = "AND";
-					if (more_than_one($exclusiongroup, 'ICPC') || more_than_one($exclusiongroup, 'Nummer')
+					if (more_than_one($exclusiongroup, 'SNOMED_CT_Code') || more_than_one($exclusiongroup, 'Nummer')
 							|| more_than_one($exclusiongroup, 'Uitschrijfdatum')) {
 						$connector = "OR";
 					}
@@ -941,7 +941,7 @@ if (isset($_COOKIE['user'])) {
 					$color = "green";
 				if (((bool) $numeratoronly) && (!((bool) $active)))
 					$color = "DarkSeaGreen";
-				$fsn = mysql_query("SELECT Term FROM `$snomeddbname`.sct2_description WHERE CONCEPTID = '$conceptid' ");
+				$fsn = mysql_query("SELECT FULLYSPECIFIEDNAME FROM concepts WHERE CONCEPTID = '$conceptid' ");
 				if (!$fsn)
 					error(mysql_error());
 				$snorow = mysql_fetch_row($fsn);
@@ -984,7 +984,7 @@ if (isset($_COOKIE['user'])) {
 					$color = "green";
 				if (((bool) $numeratoronly) && (!((bool) $active)))
 					$color = "DarkSeaGreen";
-				$fsn = mysql_query("SELECT Term FROM `$snomeddbname`.sct2_description WHERE CONCEPTID = '$conceptid' ");
+				$fsn = mysql_query("SELECT FULLYSPECIFIEDNAME FROM concepts WHERE CONCEPTID = '$conceptid' ");
 				if (!$fsn)
 					error(mysql_error());
 				$snorow = mysql_fetch_row($fsn);
@@ -1216,7 +1216,7 @@ if (isset($_COOKIE['user'])) {
 		<a name="subclasses"></a>
 		<form action="<?php echo $_SERVER['PHP_SELF'] . '#subclasses' ?>"
 			method="post">
-			<!--
+			
 			<div>
 				<input type="checkbox" name="subclassReasoning"
 					id="subclassReasoning" value="subclassReasoning"
@@ -1228,7 +1228,7 @@ if (isset($_COOKIE['user'])) {
 				subclasses (takes a little longer; queries also for subconcepts of
 				the defined concepts).
 			</div>
-			-->
+		
 			<div class="workwell">
 				<div style="margin-left: 10px;">
 					<h3>Constructed Query (Numerator constraints green, exclusion

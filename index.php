@@ -76,7 +76,7 @@ if (isset($_COOKIE['user'])) {
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<?php include_once("inc/head.inc") ?>

@@ -86,7 +86,7 @@ if (isset($_COOKIE['user'])) {
 						error(mysql_error());
 					$bound_num_rows = mysql_num_rows($boundesult);
 					$fsn = mysql_query(
-							"SELECT Term FROM `$snomeddbname`.sct2_description WHERE CONCEPTID = '$conceptid' ");
+							"SELECT FULLYSPECIFIEDNAME FROM `$snomeddbname`.concepts WHERE CONCEPTID = '$conceptid' ");
 					if (!$fsn)
 						error(mysql_error());
 					$row = mysql_fetch_row($fsn);
@@ -319,7 +319,8 @@ if (isset($_COOKIE['user'])) {
 		</form>
 		<a name="queryvariables"></a>
 		<h2>1. Define query variables</h2>
-		If you need several elements of the same database table, please define query variables
+		If you need several elements of the type / database table Procedure_undertaken or Diagnosis (check the <a
+			target="_blank" href="schema/tables/Patient.html">database schema</a>), please define query variables
 			(i.e. alias names) in order to distinguish them.
 		<div class="workwell">
 			<form action="<?php echo $_SERVER['PHP_SELF'] . '#queryvariables' ?>"
@@ -368,8 +369,8 @@ if (isset($_COOKIE['user'])) {
 								<?php
 			foreach ($patienttables as &$patienttable) {
 				$option = "$patienttable";
-				if ((strcmp($option, "journal") == 0) || (strcmp($option, "measurement") == 0)
-						|| (strcmp($option, "medication") == 0)) {
+				if ((strcmp($option, "firstpage") == 0) || (strcmp($option, "lab_test") == 0)
+						|| (strcmp($option, "examination") == 0) || (strcmp($option, "treatment") == 0)) {
 					echo "<option value='$option'";
 					if (strcmp($table, $option) == 0) {
 						echo "selected='selected'";
@@ -416,7 +417,7 @@ if (isset($_COOKIE['user'])) {
 				$id = $row['id'];
 				$conceptid = $row['conceptid'];
 				$fsn = mysql_query(
-						"SELECT Term FROM `$snomeddbname`.sct2_description WHERE CONCEPTID = '$conceptid' ");
+						"SELECT FULLYSPECIFIEDNAME FROM `$snomeddbname`.concepts WHERE CONCEPTID = '$conceptid' ");
 				if (!$content)
 					error(mysql_error());
 				$snorow = mysql_fetch_row($fsn);
@@ -528,7 +529,7 @@ if (isset($_COOKIE['user'])) {
 			while ($conceptrow = mysql_fetch_array($concepts)) {
 				$conceptid = $conceptrow['conceptid'];
 				//$fsn = mysql_query(
-				//	"SELECT Term FROM `$snomeddbname`.sct2_description WHERE CONCEPTID = '$conceptid' ");
+				//	"SELECT FULLYSPECIFIEDNAME FROM `$snomeddbname`.concepts WHERE CONCEPTID = '$conceptid' ");
 				//	if (!$fsn)
 				//	error(mysql_error());
 				//	$row = mysql_fetch_row($fsn);
