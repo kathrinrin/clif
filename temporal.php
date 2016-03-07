@@ -720,7 +720,7 @@ if (isset($_COOKIE['user'])) {
 				$color = "black";
 				if ((bool) $islastvalue)
 					$color = "blue";
-				$fsn = mysql_query("SELECT Term FROM `$snomeddbname`.sct2_description WHERE CONCEPTID = '$conceptid' ");
+				$fsn = mysql_query("SELECT FULLYSPECIFIEDNAME FROM concepts WHERE CONCEPTID = '$conceptid' ");
 				if (!$fsn)
 					error(mysql_error());
 				$snorow = mysql_fetch_row($fsn);
